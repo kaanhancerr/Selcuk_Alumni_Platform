@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:su_mezuntakip/tanitim_sayfa.dart';
+import 'package:su_mezuntakip/giris_yap.dart';
 import 'package:su_mezuntakip/themes/colors_mode.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const TanitimSayfa(),
+      home: GirisYap(),
       theme: colorsMode,
     );
   }

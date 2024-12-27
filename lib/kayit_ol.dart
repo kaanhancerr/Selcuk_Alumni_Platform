@@ -20,7 +20,7 @@ class _KayitOlState extends State<KayitOl> {
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back)),
-        backgroundColor: Colors.grey.shade400,
+        backgroundColor: Colors.transparent,
       ),
       backgroundColor: Colors.white,
       body: Center(
