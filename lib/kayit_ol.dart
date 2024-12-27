@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:su_mezuntakip/components/my_button.dart';
+import 'package:su_mezuntakip/components/my_textfield.dart';
 import 'package:su_mezuntakip/giris_yap.dart';
 
 class KayitOl extends StatefulWidget {
@@ -9,6 +11,11 @@ class KayitOl extends StatefulWidget {
 }
 
 class _KayitOlState extends State<KayitOl> {
+  final TextEditingController _adsoyadController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _sifreController = TextEditingController();
+  final TextEditingController _sifreonayController = TextEditingController();
+
   var tfController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -22,128 +29,78 @@ class _KayitOlState extends State<KayitOl> {
             icon: const Icon(Icons.arrow_back)),
         backgroundColor: Colors.transparent,
       ),
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              width: 230,
-              height: 150,
-              child: Image.asset("assets/images/selcuklogo.webp"),
-            ),
-            Icon(
-              Icons.person_add,
-              size: 35,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: tfController,
-                    decoration: InputDecoration(
-                        hintText: "Ad - Soyad",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 2))),
-                    keyboardType: TextInputType.number,
-                    obscureText: false,
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: tfController,
-                    decoration: InputDecoration(
-                        hintText: "Telefon Numarası",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 2))),
-                    keyboardType: TextInputType.number,
-                    obscureText: false,
-                  ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: tfController,
-                    decoration: InputDecoration(
-                        hintText: "E-posta",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 2))),
-                  ),
-                  SizedBox(height: 15),
-                  TextField(
-                    controller: tfController,
-                    decoration: InputDecoration(
-                        hintText: "Şifre",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.black, width: 2))),
-                  ),
-                  SizedBox(height: 15),
-                  TextField(
-                    controller: tfController,
-                    decoration: InputDecoration(
-                      hintText: "Diploma PDF seklinde yukleyiniz...",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 2),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  ElevatedButton(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: const Text("Kayıt olmak istiyor musunuz?"),
-                          action: SnackBarAction(
-                              label: "Evet",
-                              onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Kayıt olundu"),
-                                  ),
-                                );
-                              }),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade400),
-                    child: Text(
-                      "Kayıt Ol",
-                      style: TextStyle(fontSize: 17, color: Colors.black),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GirisYap()));
-                      },
-                      child: const Text(
-                        "Hesabınız var mı? Giriş yapın",
-                        style: TextStyle(color: Colors.black),
-                      ))
-                ],
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                width: 230,
+                height: 150,
+                child: Image.asset("assets/images/selcuklogo.webp"),
               ),
-            ),
-          ],
+              Icon(
+                Icons.person_add,
+                size: 35,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    MyTextField(
+                        hintText: "Ad - Soyad",
+                        obscureText: true,
+                        controller: _adsoyadController),
+                    const SizedBox(height: 1),
+                    MyTextField(
+                        hintText: "E-posta",
+                        obscureText: true,
+                        controller: _emailController),
+                    const SizedBox(height: 1),
+                    MyTextField(
+                        hintText: "Şifre",
+                        obscureText: false,
+                        controller: _sifreController),
+                    const SizedBox(height: 1),
+                    MyTextField(
+                        hintText: "Şifre onay",
+                        obscureText: false,
+                        controller: _sifreonayController),
+                    const SizedBox(height: 25),
+                    MyButton(text: "Kayıt ol", onTap: () {}),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Hesabınız var mı?",
+                          style: TextStyle(
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => GirisYap()));
+                          },
+                          child: Text(
+                            "Giriş yapın",
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .inversePrimary,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

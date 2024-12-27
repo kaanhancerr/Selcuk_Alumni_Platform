@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:su_mezuntakip/giris_yap.dart';
-import 'package:su_mezuntakip/kayit_ol.dart';
 
 class TanitimSayfa extends StatefulWidget {
   const TanitimSayfa({super.key});
@@ -18,7 +17,7 @@ class _TanitimSayfaState extends State<TanitimSayfa> {
           "Mezun Takip Sistemi",
           style: TextStyle(fontSize: 20),
         ),
-        backgroundColor: Colors.grey.shade400,
+        backgroundColor: Colors.transparent,
         centerTitle: true,
       ),
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -48,7 +47,9 @@ class _TanitimSayfaState extends State<TanitimSayfa> {
                           MaterialPageRoute(builder: (context) => GirisYap()));
                     },
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade400),
+                        backgroundColor: Colors.grey.shade400,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(3))),
                     child: const Text(
                       "Giriş Yap",
                       style: TextStyle(fontSize: 20, color: Colors.white),
@@ -57,16 +58,27 @@ class _TanitimSayfaState extends State<TanitimSayfa> {
                 ),
               ),
               const SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const KayitOl(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Hesabınız var mı?",
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => GirisYap()));
+                    },
+                    child: Text(
+                      "Giriş yapın",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold),
                     ),
-                  );
-                },
-                child: const Text("Hesabınız yok mu? Hemen Kayıt ol"),
+                  ),
+                ],
               ),
             ],
           ),

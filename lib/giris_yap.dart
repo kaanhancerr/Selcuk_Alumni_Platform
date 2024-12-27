@@ -24,6 +24,11 @@ class _GirisYapState extends State<GirisYap> {
           "Hoşgeldiniz",
           style: TextStyle(),
         ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back)),
         backgroundColor: Colors.transparent,
       ),
       backgroundColor: Theme.of(context).colorScheme.surface,
