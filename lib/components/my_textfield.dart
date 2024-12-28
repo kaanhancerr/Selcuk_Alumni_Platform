@@ -23,11 +23,12 @@ class MyTextField extends StatelessWidget {
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.tertiary, width: 2),
+                  color: Theme.of(context).colorScheme.tertiary, width: 1),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary, width: 2),
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  width: 2),
             ),
             fillColor: Theme.of(context).colorScheme.tertiary,
             filled: true,

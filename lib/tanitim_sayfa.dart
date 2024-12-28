@@ -36,6 +36,7 @@ class _TanitimSayfaState extends State<TanitimSayfa> {
                   style: TextStyle(fontSize: 14),
                 ),
               ),
+              const SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.only(top: 24.0),
                 child: SizedBox(
