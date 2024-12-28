@@ -69,8 +69,10 @@ class _TanitimSayfaState extends State<TanitimSayfa> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => GirisYap()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const GirisYap()));
                     },
                     child: Text(
                       "Giriş yapın",
