@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:su_mezuntakip/components/my_button.dart';
-import 'package:su_mezuntakip/components/my_textfield.dart';
-import 'package:su_mezuntakip/giris_yap.dart';
+import 'package:selcuk_alumni_platform/components/my_button.dart';
+import 'package:selcuk_alumni_platform/components/my_textfield.dart';
+import 'package:selcuk_alumni_platform/giris_yap.dart';
 
 class KayitOl extends StatefulWidget {
   const KayitOl({super.key});

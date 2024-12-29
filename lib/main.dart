@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:su_mezuntakip/tanitim_sayfa.dart';
-import 'package:su_mezuntakip/themes/colors_mode.dart';
+import 'package:selcuk_alumni_platform/tanitim_sayfa.dart';
+import 'package:selcuk_alumni_platform/themes/colors_mode.dart';
 
 void main() {
   runApp(const MyApp());

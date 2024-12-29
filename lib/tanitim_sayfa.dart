@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:su_mezuntakip/giris_yap.dart';
+import 'package:selcuk_alumni_platform/giris_yap.dart';
 
 class TanitimSayfa extends StatefulWidget {
   const TanitimSayfa({super.key});

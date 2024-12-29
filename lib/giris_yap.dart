@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:su_mezuntakip/components/my_button.dart';
-import 'package:su_mezuntakip/components/my_textfield.dart';
-import 'package:su_mezuntakip/kayit_ol.dart';
+import 'package:selcuk_alumni_platform/components/my_button.dart';
+import 'package:selcuk_alumni_platform/components/my_textfield.dart';
+import 'package:selcuk_alumni_platform/kayit_ol.dart';
 
 class GirisYap extends StatefulWidget {
   const GirisYap({super.key});
