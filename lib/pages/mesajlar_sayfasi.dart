@@ -10,7 +10,14 @@ class MesajlarSayfasi extends StatelessWidget {
   Widget build(BuildContext context) {
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     final FirebaseAuth _auth = FirebaseAuth.instance;
-    final String currentUserId = _auth.currentUser!.uid;
+
+    // Kullanıcı kontrolü
+    final currentUser = _auth.currentUser;
+    if (currentUser == null) {
+      return const Center(child: Text('Lütfen giriş yapın'));
+    }
+
+    final String currentUserId = currentUser.uid;
 
     return Scaffold(
       backgroundColor: Colors.white,
