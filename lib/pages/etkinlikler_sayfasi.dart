@@ -641,10 +641,8 @@ class EtkinliklerIcerik extends StatelessWidget {
                                     Text(
                                       _formatDate(
                                           etkinlikData['tarih'] as Timestamp),
-                                      style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
+                                      style: const TextStyle(
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ],
@@ -657,11 +655,8 @@ class EtkinliklerIcerik extends StatelessWidget {
                                     Text(
                                       etkinlikData['konum'] ??
                                           'Konum belirtilmedi',
-                                      style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                      ),
+                                      style:
+                                          const TextStyle(color: Colors.black),
                                     ),
                                   ],
                                 ),
