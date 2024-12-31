@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selcuk_alumni_platform/pages/tanitim_sayfa.dart';
 import 'package:selcuk_alumni_platform/themes/colors_mode.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:selcuk_alumni_platform/pages/giris_yap.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const EtkinliklerSayfasi(),
+      home: const TanitimSayfa(),
       theme: colorsMode,
       routes: {
         '/giris': (context) => const GirisYap(),

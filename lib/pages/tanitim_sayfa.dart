@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:selcuk_alumni_platform/components/my_button.dart';
 import 'package:selcuk_alumni_platform/pages/giris_yap.dart';
+import 'package:selcuk_alumni_platform/pages/kayit_ol.dart';
 
 class TanitimSayfa extends StatefulWidget {
   const TanitimSayfa({super.key});
@@ -40,30 +42,23 @@ class _TanitimSayfaState extends State<TanitimSayfa> {
               Padding(
                 padding: const EdgeInsets.only(top: 24.0),
                 child: SizedBox(
-                  height: 50,
-                  width: 200,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => GirisYap()));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey.shade400,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(3))),
-                    child: const Text(
-                      "Giriş Yap",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
-                ),
+                    height: 50,
+                    width: 200,
+                    child: MyButton(
+                        text: "Giriş Yap",
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const GirisYap()));
+                        })),
               ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Hesabınız var mı?",
+                    "Hesabınız yok mu?",
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.inversePrimary),
                   ),
@@ -72,10 +67,10 @@ class _TanitimSayfaState extends State<TanitimSayfa> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const GirisYap()));
+                              builder: (context) => const KayitOl()));
                     },
                     child: Text(
-                      "Giriş yapın",
+                      "Kayıt ol",
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.inversePrimary,
                           fontWeight: FontWeight.bold),
