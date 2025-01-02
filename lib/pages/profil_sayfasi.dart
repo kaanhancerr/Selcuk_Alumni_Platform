@@ -111,7 +111,7 @@ class _ProfilSayfasiState extends State<ProfilSayfasi> {
                     width: 3,
                   ),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.person,
                   size: 80,
                   color: Colors.black,
