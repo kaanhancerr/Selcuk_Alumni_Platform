@@ -144,6 +144,7 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
       ),
       floatingActionButton: _isAdmin && _selectedIndex == 0
           ? FloatingActionButton(
+              heroTag: 'adminButton',
               onPressed: () => _showYeniEtkinlikDialog(context),
               child: const Icon(Icons.add),
             )
@@ -679,6 +680,7 @@ class EtkinliklerIcerik extends StatelessWidget {
           right: 16,
           bottom: 16,
           child: FloatingActionButton.extended(
+            heroTag: 'oneriButton',
             onPressed: () => _showEtkinlikOneriDialog(context),
             label: const Text('Etkinlik Öner'),
             icon: const Icon(Icons.add_comment),

@@ -36,50 +36,42 @@ class _GirisYapState extends State<GirisYap> {
     });
 
     try {
-      if (_emailController.text.isEmpty || _pwController.text.isEmpty) {
+      final email = _emailController.text.trim();
+      final password = _pwController.text.trim();
+
+      if (email.isEmpty || password.isEmpty) {
         throw 'Lütfen tüm alanları doldurunuz';
       }
 
-      // Firebase ile giriş
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _pwController.text.trim(),
+      // Admin kontrolünü email üzerinden yapıyoruz
+      _isAdmin = email == "kaan@gmail.com";
+
+      // Firebase ile giriş yap
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
 
-      if (_isAdmin) {
-        // Admin girişi için kontrol
-        if (_emailController.text.trim() != "kaan@gmail.com") {
-          throw 'Bu hesap admin yetkisine sahip değil';
-        }
-
-        final adminDoc = await _firestore
-            .collection('admins')
-            .doc(userCredential.user!.uid)
-            .get();
-
-        if (!adminDoc.exists) {
-          throw 'Bu hesap admin yetkisine sahip değil';
-        }
-      } else {
-        // Normal kullanıcı girişi için kontrol
-        if (_emailController.text.trim() == "kaan@gmail.com") {
-          throw 'Lütfen admin girişini kullanın';
-        }
-
+      // Normal kullanıcı için Firestore kontrolü
+      if (!_isAdmin) {
         final userDoc = await _firestore
             .collection('users')
-            .doc(userCredential.user!.uid)
+            .doc(_auth.currentUser?.uid)
             .get();
 
         if (!userDoc.exists) {
+          await _auth.signOut();
           throw 'Kullanıcı bilgileri bulunamadı';
         }
       }
 
+      // Giriş başarılı, yönlendirme yap
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const EtkinliklerSayfasi()),
+          MaterialPageRoute(
+            builder: (context) => const EtkinliklerSayfasi(),
+          ),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -91,9 +83,11 @@ class _GirisYapState extends State<GirisYap> {
         _errorMessage = e.toString();
       });
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -119,7 +113,7 @@ class _GirisYapState extends State<GirisYap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_isAdmin ? "Admin Girişi" : "Üye Girişi"),
+        title: const Text("Üye Girişi"),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back),
@@ -140,27 +134,10 @@ class _GirisYapState extends State<GirisYap> {
                 ),
                 const SizedBox(height: 20),
                 Icon(
-                  _isAdmin ? Icons.admin_panel_settings : Icons.school,
+                  Icons.school,
                   size: 70,
-                  color: _isAdmin ? Colors.red : null,
                 ),
                 const SizedBox(height: 20),
-                // Kullanıcı tipi seçimi
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Admin Girişi"),
-                    Switch(
-                      value: _isAdmin,
-                      onChanged: (value) {
-                        setState(() {
-                          _isAdmin = value;
-                          _errorMessage = null;
-                        });
-                      },
-                    ),
-                  ],
-                ),
                 Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Column(
