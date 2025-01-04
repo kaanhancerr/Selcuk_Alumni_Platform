@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:selcuk_alumni_platform/pages/chat_sayfasi.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AgSayfasi extends StatefulWidget {
   const AgSayfasi({super.key});
@@ -92,8 +93,8 @@ class _AgSayfasiState extends State<AgSayfasi> {
                   ),
                   title: Text(
                     userData['adSoyad'] ?? 'İsimsiz',
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   subtitle: Column(
@@ -103,6 +104,57 @@ class _AgSayfasiState extends State<AgSayfasi> {
                           '${userData['bolum'] ?? 'Bölüm belirtilmemiş'} (${userData['mezuniyetYili'] ?? '-'})'),
                       Text(
                           '${userData['firma'] ?? 'Firma belirtilmemiş'} - ${userData['pozisyon'] ?? 'Pozisyon belirtilmemiş'}'),
+                      Text('İl: ${userData['il'] ?? 'Belirtilmemiş'}'),
+                      const SizedBox(height: 8),
+                      // Sosyal medya linkleri
+                      if (userData['linkedin'] != null &&
+                          userData['linkedin'].toString().isNotEmpty)
+                        InkWell(
+                          onTap: () async {
+                            final url = userData['linkedin'];
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.link,
+                                  size: 16, color: Colors.blue[700]),
+                              const SizedBox(width: 4),
+                              Text(
+                                'LinkedIn',
+                                style: TextStyle(
+                                  color: Colors.blue[700],
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (userData['github'] != null &&
+                          userData['github'].toString().isNotEmpty)
+                        InkWell(
+                          onTap: () async {
+                            final url = userData['github'];
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.code,
+                                  size: 16, color: Colors.grey[800]),
+                              const SizedBox(width: 4),
+                              Text(
+                                'GitHub',
+                                style: TextStyle(
+                                  color: Colors.grey[800],
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                     ],
                   ),
                   trailing: IconButton(
