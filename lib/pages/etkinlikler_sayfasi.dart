@@ -5,6 +5,7 @@ import 'package:selcuk_alumni_platform/pages/kullanicilar_sayfasi.dart';
 import 'package:selcuk_alumni_platform/pages/profil_sayfasi.dart';
 import 'package:selcuk_alumni_platform/pages/ag_sayfasi.dart';
 import 'package:selcuk_alumni_platform/pages/mesajlar_sayfasi.dart';
+import 'package:selcuk_alumni_platform/pages/is_firsatlar_sayfasi.dart';
 
 class EtkinliklerSayfasi extends StatefulWidget {
   const EtkinliklerSayfasi({super.key});
@@ -23,6 +24,7 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
     const EtkinliklerIcerik(),
     const AgSayfasi(),
     const MesajlarSayfasi(),
+    const IsFirsatlarSayfasi(),
     const ProfilSayfasi(),
   ];
 
@@ -52,6 +54,8 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
         case 2:
           return "Mesajlar";
         case 3:
+          return "İş & Fırsatlar";
+        case 4:
           return "Profil";
         default:
           return "Etkinlikler";
@@ -63,30 +67,43 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
       appBar: AppBar(
         title: Text(_getTitle()),
         actions: [
-          if (_isAdmin && _selectedIndex == 0)
+          if (_isAdmin && (_selectedIndex == 0 || _selectedIndex == 3))
             PopupMenuButton(
               icon: const Icon(Icons.more_vert),
               itemBuilder: (context) => [
-                const PopupMenuItem(
-                  value: 'users',
-                  child: Row(
-                    children: [
-                      Icon(Icons.people),
-                      SizedBox(width: 8),
-                      Text('Kullanıcılar'),
-                    ],
+                if (_selectedIndex == 0)
+                  const PopupMenuItem(
+                    value: 'users',
+                    child: Row(
+                      children: [
+                        Icon(Icons.people),
+                        SizedBox(width: 8),
+                        Text('Kullanıcılar'),
+                      ],
+                    ),
                   ),
-                ),
-                const PopupMenuItem(
-                  value: 'suggestions',
-                  child: Row(
-                    children: [
-                      Icon(Icons.pending_actions),
-                      SizedBox(width: 8),
-                      Text('Etkinlik Önerileri'),
-                    ],
+                if (_selectedIndex == 0)
+                  const PopupMenuItem(
+                    value: 'suggestions',
+                    child: Row(
+                      children: [
+                        Icon(Icons.pending_actions),
+                        SizedBox(width: 8),
+                        Text('Etkinlik Önerileri'),
+                      ],
+                    ),
                   ),
-                ),
+                if (_selectedIndex == 3)
+                  const PopupMenuItem(
+                    value: 'is_ilanlari',
+                    child: Row(
+                      children: [
+                        Icon(Icons.work),
+                        SizedBox(width: 8),
+                        Text('İş İlanları'),
+                      ],
+                    ),
+                  ),
               ],
               onSelected: (value) {
                 if (value == 'users') {
@@ -98,6 +115,8 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
                   );
                 } else if (value == 'suggestions') {
                   _showEtkinlikOnerileriDialog(context);
+                } else if (value == 'is_ilanlari') {
+                  _showIsIlanlariDialog(context);
                 }
               },
             ),
@@ -135,6 +154,10 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
             label: 'Mesajlar',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.work_outline),
+            label: 'İş & Fırsatlar',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -405,6 +428,142 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
                                     const SnackBar(
                                       content:
                                           Text('Etkinlik önerisi reddedildi'),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                              } catch (e) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Bir hata oluştu'),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Kapat'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showIsIlanlariDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('İş İlanları'),
+        content: SizedBox(
+          width: double.maxFinite,
+          height: 400,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: _firestore
+                .collection('is_ilanlari')
+                .where('durum', isEqualTo: 'beklemede')
+                .orderBy('olusturmaTarihi', descending: true)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print('Hata: ${snapshot.error}');
+                return const Center(child: Text('Bir hata oluştu'));
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              final ilanlar = snapshot.data?.docs ?? [];
+
+              if (ilanlar.isEmpty) {
+                return const Center(child: Text('Bekleyen ilan yok'));
+              }
+
+              return ListView.builder(
+                itemCount: ilanlar.length,
+                itemBuilder: (context, index) {
+                  final ilan = ilanlar[index].data() as Map<String, dynamic>;
+
+                  return Card(
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                    child: ListTile(
+                      title: Text(
+                        ilan['baslik'] ?? '',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(ilan['aciklama'] ?? ''),
+                          Text('Firma: ${ilan['firma']}'),
+                          Text('Tip: ${ilan['tip']}'),
+                          Text('Konum: ${ilan['konum']}'),
+                          Text('İletişim: ${ilan['iletisim']}'),
+                          Text('Öneren: ${ilan['olusturanEmail']}'),
+                        ],
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.check),
+                            color: Colors.green,
+                            onPressed: () async {
+                              try {
+                                await _firestore
+                                    .collection('is_ilanlari')
+                                    .doc(ilanlar[index].id)
+                                    .update({'durum': 'onaylandi'});
+
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('İlan onaylandı'),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                  );
+                                }
+                              } catch (e) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Bir hata oluştu'),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.close),
+                            color: Colors.red,
+                            onPressed: () async {
+                              try {
+                                await _firestore
+                                    .collection('is_ilanlari')
+                                    .doc(ilanlar[index].id)
+                                    .update({'durum': 'reddedildi'});
+
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('İlan reddedildi'),
                                       backgroundColor: Colors.red,
                                     ),
                                   );
