@@ -20,6 +20,9 @@ class _ProfilSayfasiState extends State<ProfilSayfasi> {
   final TextEditingController _bolumController = TextEditingController();
   final TextEditingController _firmaController = TextEditingController();
   final TextEditingController _pozisyonController = TextEditingController();
+  final TextEditingController _ilController = TextEditingController();
+  final TextEditingController _linkedinController = TextEditingController();
+  final TextEditingController _githubController = TextEditingController();
 
   bool _isLoading = false;
   Map<String, dynamic>? _userData;
@@ -43,6 +46,9 @@ class _ProfilSayfasiState extends State<ProfilSayfasi> {
             _bolumController.text = _userData?['bolum'] ?? '';
             _firmaController.text = _userData?['firma'] ?? '';
             _pozisyonController.text = _userData?['pozisyon'] ?? '';
+            _ilController.text = _userData?['il'] ?? '';
+            _linkedinController.text = _userData?['linkedin'] ?? '';
+            _githubController.text = _userData?['github'] ?? '';
           });
         }
       }
@@ -66,6 +72,9 @@ class _ProfilSayfasiState extends State<ProfilSayfasi> {
           'bolum': _bolumController.text.trim(),
           'firma': _firmaController.text.trim(),
           'pozisyon': _pozisyonController.text.trim(),
+          'il': _ilController.text.trim(),
+          'linkedin': _linkedinController.text.trim(),
+          'github': _githubController.text.trim(),
           'updatedAt': Timestamp.now(),
         });
 
@@ -197,6 +206,54 @@ class _ProfilSayfasiState extends State<ProfilSayfasi> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Pozisyon bilgisi gerekli';
+                  }
+                  return null;
+                },
+              ),
+              MyTextField(
+                hintText: 'İl',
+                obscureText: false,
+                controller: _ilController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'İl bilgisi gerekli';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Sosyal Medya',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              MyTextField(
+                hintText: 'LinkedIn Profil Linki',
+                obscureText: false,
+                controller: _linkedinController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'LinkedIn profil linki gerekli';
+                  }
+                  if (!value.contains('linkedin.com')) {
+                    return 'Geçerli bir LinkedIn linki giriniz';
+                  }
+                  return null;
+                },
+              ),
+              MyTextField(
+                hintText: 'GitHub Profil Linki',
+                obscureText: false,
+                controller: _githubController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'GitHub profil linki gerekli';
+                  }
+                  if (!value.contains('github.com')) {
+                    return 'Geçerli bir GitHub linki giriniz';
                   }
                   return null;
                 },
