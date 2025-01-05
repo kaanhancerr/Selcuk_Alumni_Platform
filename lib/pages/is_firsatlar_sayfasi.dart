@@ -104,7 +104,7 @@ class IsFirsatlarSayfasi extends StatelessWidget {
                                                         .showSnackBar(
                                                       const SnackBar(
                                                         content: Text(
-                                                            'İlan silindi'),
+                                                            'İlan silindi'), // ilan silme fonks. firestoredan da silinir.
                                                         backgroundColor:
                                                             Colors.green,
                                                       ),
