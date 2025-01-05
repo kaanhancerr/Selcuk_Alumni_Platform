@@ -66,6 +66,7 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(_getTitle()),
+        leading: Container(),
         backgroundColor: Colors.transparent,
         actions: [
           if (_isAdmin && (_selectedIndex == 0 || _selectedIndex == 3))
