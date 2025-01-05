@@ -190,13 +190,17 @@ class _GirisYapState extends State<GirisYap> {
                             ),
                           ),
                         ),
-                      MyButton(
-                        text: _isLoading
-                            ? "Giriş Yapılıyor..."
-                            : _isAdmin
-                                ? "Admin Girişi Yap"
-                                : "Giriş Yap",
-                        onTap: _isLoading ? null : login,
+                      SizedBox(
+                        width: 300,
+                        height: 50,
+                        child: MyButton(
+                          text: _isLoading
+                              ? "Giriş Yapılıyor..."
+                              : _isAdmin
+                                  ? "Admin Girişi Yap"
+                                  : "Giriş Yap",
+                          onTap: _isLoading ? null : login,
+                        ),
                       ),
                       if (!_isAdmin) // Sadece normal kullanıcılar için kayıt ol
                         const SizedBox(height: 30),
