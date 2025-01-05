@@ -209,9 +209,13 @@ class _KayitOlState extends State<KayitOl> {
                           ),
                         ),
                       const SizedBox(height: 15),
-                      MyButton(
-                        text: _isLoading ? "Kayıt Yapılıyor..." : "Kayıt Ol",
-                        onTap: _isLoading ? null : signUp,
+                      SizedBox(
+                        width: 300,
+                        height: 50,
+                        child: MyButton(
+                          text: _isLoading ? "Kayıt Yapılıyor..." : "Kayıt Ol",
+                          onTap: _isLoading ? null : signUp,
+                        ),
                       ),
                       const SizedBox(height: 20),
                       Row(
