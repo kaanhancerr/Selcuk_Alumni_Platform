@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:selcuk_alumni_platform/components/my_button.dart';
 import 'package:selcuk_alumni_platform/components/my_textfield.dart';
 
 class ProfilSayfasi extends StatefulWidget {
@@ -101,7 +102,7 @@ class _ProfilSayfasiState extends State<ProfilSayfasi> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[300],
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -259,14 +260,22 @@ class _ProfilSayfasiState extends State<ProfilSayfasi> {
                 },
               ),
               const SizedBox(height: 20),
+              // SizedBox(
+              //   width: double.infinity,
+              //   child: ElevatedButton(
+              //     onPressed: _isLoading? null : _saveProfile,
+              //     style: ElevatedButton.styleFrom(
+              //       padding: const EdgeInsets.symmetric(vertical: 10),
+              //     ),
+              //     child: Text(_isLoading ? 'Kaydediliyor...' : 'Kaydet'),
+              //   ),
+              // ),
               SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _isLoading ? null : _saveProfile,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                  ),
-                  child: Text(_isLoading ? 'Kaydediliyor...' : 'Kaydet'),
+                width: 300,
+                height: 50,
+                child: MyButton(
+                  text: _isLoading ? "Kaydediliyor..." : "Kaydet",
+                  onTap: _isLoading ? null : _saveProfile,
                 ),
               ),
             ],
