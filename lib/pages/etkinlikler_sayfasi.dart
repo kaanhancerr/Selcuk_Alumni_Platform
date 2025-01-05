@@ -66,6 +66,7 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(_getTitle()),
+        backgroundColor: Colors.transparent,
         actions: [
           if (_isAdmin && (_selectedIndex == 0 || _selectedIndex == 3))
             PopupMenuButton(
@@ -165,13 +166,13 @@ class _EtkinliklerSayfasiState extends State<EtkinliklerSayfasi> {
           ),
         ],
       ),
-      floatingActionButton: _isAdmin && _selectedIndex == 0
-          ? FloatingActionButton(
-              heroTag: 'adminButton',
-              onPressed: () => _showYeniEtkinlikDialog(context),
-              child: const Icon(Icons.add),
-            )
-          : null,
+      // floatingActionButton: _isAdmin && _selectedIndex == 0
+      //     ? FloatingActionButton(
+      //         heroTag: 'adminButton',
+      //         onPressed: () => _showYeniEtkinlikDialog(context),
+      //         child: const Icon(Icons.add),
+      //       )
+      //     : null,
     );
   }
 
