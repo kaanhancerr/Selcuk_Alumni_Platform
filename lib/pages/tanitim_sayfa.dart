@@ -43,7 +43,7 @@ class _TanitimSayfaState extends State<TanitimSayfa> {
                 padding: const EdgeInsets.only(top: 24.0),
                 child: SizedBox(
                     height: 50,
-                    width: 200,
+                    width: 150,
                     child: MyButton(
                         text: "Giriş Yap",
                         onTap: () {

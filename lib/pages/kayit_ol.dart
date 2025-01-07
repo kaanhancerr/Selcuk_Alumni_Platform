@@ -210,7 +210,7 @@ class _KayitOlState extends State<KayitOl> {
                         ),
                       const SizedBox(height: 15),
                       SizedBox(
-                        width: 300,
+                        width: 250,
                         height: 50,
                         child: MyButton(
                           text: _isLoading ? "Kayıt Yapılıyor..." : "Kayıt Ol",
