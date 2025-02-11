@@ -133,7 +133,7 @@ class _GirisYapState extends State<GirisYap> {
                   width: 500,
                 ),
                 const SizedBox(height: 20),
-                Icon(
+                const Icon(
                   Icons.school,
                   size: 70,
                 ),
